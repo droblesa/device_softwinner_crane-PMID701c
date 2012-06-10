@@ -5,8 +5,8 @@ $(call inherit-product, device/softwinner/crane-common/ProductCommon.mk)
 DEVICE_PACKAGE_OVERLAYS := device/softwinner/crane-pmid701c/overlay
 
 PRODUCT_COPY_FILES += \
-	device/softwinner/crane-pmid701c/kernel:kernel \
-	device/softwinner/crane-pmid701c/recovery.fstab:recovery.fstab
+#	device/softwinner/crane-pmid701c/kernel:kernel \
+#	device/softwinner/crane-pmid701c/recovery.fstab:recovery.fstab
 
 PRODUCT_COPY_FILES += \
 	device/softwinner/crane-pmid701c/ueventd.sun4i.rc:root/ueventd.sun4i.rc \
@@ -17,11 +17,12 @@ PRODUCT_COPY_FILES += \
 #input device config
 PRODUCT_COPY_FILES += \
 	device/softwinner/crane-pmid701c/sun4i-keyboard.kl:system/usr/keylayout/sun4i-keyboard.kl \
-	device/softwinner/crane-pmid701c/hv_keypad.kl:system/usr/keylayout/hv_keypad.kl \
-	device/softwinner/crane-pmid701c/gt80x.idc:system/usr/idc/gt80x.idc
+	device/softwinner/crane-pmid701c/axp20-supplyer.kl:system/usr/keylayout/axp20-supplyer.kl \
+#	device/softwinner/crane-pmid701c/gt80x.idc:system/usr/idc/gt80x.idc
 
+#logos and boot animation
 PRODUCT_COPY_FILES += \
-	device/softwinner/crane-pmid701c/initlogo.rle:root/initlogo.rle \
+#	device/softwinner/crane-pmid701c/initlogo.rle:root/initlogo.rle \
 	device/softwinner/crane-pmid701c/media/bootanimation.zip:system/media/bootanimation.zip
 
 PRODUCT_COPY_FILES += \
