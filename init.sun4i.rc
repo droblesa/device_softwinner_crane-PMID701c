@@ -1,0 +1,56 @@
+import init.sun4i.usb.rc
+
+on early-init
+	export EXTERNAL_STORAGE /mnt/sdcard
+	mkdir /mnt/sdcard 0000 system system
+	# for backwards compatibility
+	symlink /mnt/sdcard /sdcard
+	
+	mkdir /mnt/extsd 0000 system system
+	mkdir /mnt/usbhost1 0000 system system
+
+on fs
+    mount ext4 /dev/block/nandd /system wait noatime nodev barrier=0
+
+# try to mount /data
+	wait /dev/block/nande
+	mount ext4 /dev/block/nande /data wait noatime nosuid nodev barrier=0
+	setupfs /dev/block/nande	
+	umount /data
+	exec /system/bin/logwrapper /system/bin/e2fsck -y /dev/block/nande    
+	exec /system/bin/busybox mount -t ext4 -o noatime,nosuid,nodev,barrier=0,journal_checksum,noauto_da_alloc /dev/block/nande /data 
+
+# try to mount /cache
+    mount ext4 /dev/block/nandh /cache wait noatime nosuid nodev barrier=0
+	setupfs /dev/block/nandh
+	umount /cache
+    exec /system/bin/logwrapper /system/bin/e2fsck -y /dev/block/nandh 
+    exec /system/bin/busybox mount -t ext4 -o noatime,nosuid,nodev,barrier=0,journal_checksum,noauto_da_alloc /dev/block/nandh /cache 
+        
+    format_userdata /dev/block/nandi INTERNAL
+
+on boot
+
+# insmod tp & key driver
+	insmod /system/vendor/modules/ft5x_ts.ko
+
+# insmod mali driver 
+	insmod /system/vendor/modules/ump.ko
+	insmod /system/vendor/modules/mali.ko
+
+# insmod gsensor
+	insmod /system/vendor/modules/mma7660.ko
+
+#csi module
+	insmod /system/vendor/modules/videobuf-core.ko
+	insmod /system/vendor/modules/videobuf-dma-contig.ko
+	insmod /system/vendor/modules/ov7670.ko
+	insmod /system/vendor/modules/sun4i_csi0.ko
+	
+#network module
+	insmod /system/vendor/modules/usbnet.ko
+	insmod /system/vendor/modules/asix.ko
+	insmod /system/vendor/modules/qf9700.ko
+	insmod /system/vendor/modules/mcs7830.ko
+	insmod /system/vendor/modules/rtl8150.ko
+
