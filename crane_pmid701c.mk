@@ -1,4 +1,4 @@
-# crane aino product config
+# crane pmid701c product config
 
 $(call inherit-product, device/softwinner/crane-common/ProductCommon.mk)
 
